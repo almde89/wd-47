@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Ceep</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="estilos.css">
-    <link rel="stylesheet" href="cabecalho.css">
-    <link rel="stylesheet" href="opcoesDaPagina.css">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/cabecalho.css">
+    <link rel="stylesheet" href="css/opcoesDaPagina.css">
+    <link rel="stylesheet" href="css/cartao.css">
+    <link rel="stylesheet" href="css/opcoesDoCartao.css">
 </head>
+
 <body>
     <header class="container cabecalho">
         <h1 class="cabecalho-logo">Ceep</h1>
@@ -15,23 +19,38 @@
             <button id="mudaLayout" class="opcoesDaPagina-botao opcoesDaPagina-opcao">Linhas</button>
         </div>
     </header>
-    
+
     <section class="container mural">
         <div class="cartao" id="cartao1">
-            <p class="cartao-conteudo">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi ab, sequi, quos pariatur maiores, asperiores fugit inventore neque velit aperiam similique quisquam? Eligendi maiores, nam iure eaque labore dolorem atque?</p>
+            <div class="opcoesDoCartao"><button class="opcoesDoCartao-opcao opcoesDoCartao-remove" data-cartao="1">Remove</button></div>
+            <p class="cartao-conteudo">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi ab, sequi, quos pariatur maiores, asperiores fugit
+                inventore neque velit aperiam similique quisquam? Eligendi maiores, nam iure eaque labore dolorem atque?</p>
         </div>
         <div class="cartao" id="cartao2">
-            <p class="cartao-conteudo">Veniam illo saepe cum autem architecto animi ea. Eveniet non debitis eum perspiciatis facere officia minima quibusdam voluptas, nobis voluptate praesentium dolore aperiam est tempora vel. Nam doloremque doloribus dolorem?</p>
+            <div class="opcoesDoCartao"><button class="opcoesDoCartao-opcao opcoesDoCartao-remove" data-cartao="2">Remove</button></div>
+            <p class="cartao-conteudo">Veniam illo saepe cum autem architecto animi ea. Eveniet non debitis eum perspiciatis facere officia minima quibusdam
+                voluptas, nobis voluptate praesentium dolore aperiam est tempora vel. Nam doloremque doloribus dolorem?</p>
         </div>
         <div class="cartao" id="cartao3">
-            <p class="cartao-conteudo">Eius nulla dolor quibusdam. Architecto voluptate, maiores facere reiciendis illum possimus blanditiis cum veniam et tempora mollitia veritatis quaerat culpa minus voluptates cupiditate adipisci dignissimos quo eveniet saepe reprehenderit, inventore!</p>
+            <div class="opcoesDoCartao"><button class="opcoesDoCartao-opcao opcoesDoCartao-remove" data-cartao="3">Remove</button></div>
+            <p class="cartao-conteudo">Eius nulla dolor quibusdam. Architecto voluptate, maiores facere reiciendis illum possimus blanditiis cum veniam
+                et tempora mollitia veritatis quaerat culpa minus voluptates cupiditate adipisci dignissimos quo eveniet
+                saepe reprehenderit, inventore!</p>
         </div>
         <div class="cartao" id="cartao4">
-            <p class="cartao-conteudo">Quia distinctio cum fugit cupiditate quasi sit laborum explicabo architecto, dolorem aperiam nobis cumque esse provident quo iusto, ipsum quam perferendis laboriosam dolorum. Magni iure voluptatem, tempora, nisi expedita dolore.</p>
+            <div class="opcoesDoCartao"><button class="opcoesDoCartao-opcao opcoesDoCartao-remove" data-cartao="4">Remove</button></div>
+            <p class="cartao-conteudo">Quia distinctio cum fugit cupiditate quasi sit laborum explicabo architecto, dolorem aperiam nobis cumque esse
+                provident quo iusto, ipsum quam perferendis laboriosam dolorum. Magni iure voluptatem, tempora, nisi expedita
+                dolore.</p>
         </div>
         <div class="cartao" id="cartao5">
-            <p class="cartao-conteudo">Nihil tempore magnam iste sequi similique aspernatur, doloremque atque nam repudiandae sunt ut inventore! Aliquid, laudantium molestias inventore, adipisci magnam laboriosam aperiam quod dicta quo necessitatibus fuga, hic, nam vitae.</p>
+            <div class="opcoesDoCartao"><button class="opcoesDoCartao-opcao opcoesDoCartao-remove" data-cartao="5">Remove</button></div>
+            <p class="cartao-conteudo">Nihil tempore magnam iste sequi similique aspernatur, doloremque atque nam repudiandae sunt ut inventore! Aliquid,
+                laudantium molestias inventore, adipisci magnam laboriosam aperiam quod dicta quo necessitatibus fuga, hic,
+                nam vitae.</p>
         </div>
     </section>
+    <script src="js/principal.js"></script>
 </body>
+
 </html>
