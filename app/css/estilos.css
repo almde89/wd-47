@@ -1,7 +1,5 @@
 * {
-    /*    margin entre a borda e os outros elementosda página*/
     margin: 0;
-    /*    margin interna entre borda e elemento*/
     padding: 0;
 }
 
@@ -11,60 +9,47 @@ body {
 
 .cabecalho {
     background: #3b89da;
-    /*    /margin interna entre borda e elemento*/
-    /*    padding: 16px;*/
+
+}
+
+.container {
+    padding: 0 10%; /* 0% top-bottom & 10% left-right */
 }
 
 .cartao {
     background: #ebef40;
     margin: 16px;
     padding: 16px;
-    display: block;
-}
-
-.cartao--some {
-    opacity: 0;
-    transition: .2s ease-in;
 }
 
 #mudaLayout {
     display: none;
 }
 
-
-/*depois do tam definido, ele tratará diferentemente.*/
-
-@media (min-width: 560px) {
+@media(min-width: 560px) {
     .cartao {
-        display: inline-block;
         width: 190px;
         box-sizing: border-box;
-        /* para considerar todas as bordas no tamanho*/
+        display: inline-block;
         text-align: left;
         flex-grow: 1;
-        /* permite que o cartão de uma esticada se não couber na mesma linha */
     }
+    
     .mural {
         text-align: center;
         display: flex;
         flex-wrap: wrap;
     }
+    
     .mural--linhas {
         flex-direction: column;
     }
+    
     .mural--linhas .cartao {
         width: auto;
     }
+    
     #mudaLayout {
         display: inline-block;
     }
-}
-
-.container {
-    /*    com 2 valores, 1o é top e bottom e 2o é left right*/
-    padding: 0 10%;
-}
-
-.mural {
-    /*    diplay: flex;*/
 }
