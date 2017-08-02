@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/opcoesDaPagina.css">
     <link rel="stylesheet" href="css/cartao.css">
     <link rel="stylesheet" href="css/opcoesDoCartao.css">
+    <link rel="stylesheet" href="css/novoCartao.css">
 </head>
 
 <body>
@@ -19,7 +20,11 @@
             <button id="mudaLayout" class="opcoesDaPagina-botao opcoesDaPagina-opcao">Linhas</button>
         </div>
     </header>
-
+    <form class="container novoCartao">
+        <textarea name="novoCartao-conteudo" id="novoCartao-conteudo" cols="30" rows="10" class="novoCartao-conteudo" placeholder="Digite aqui"></textarea>
+        <input
+            type="submit" class="novoCartao-salvar" value="Salvar">
+    </form>
     <section class="container mural">
         <div class="cartao" id="cartao1">
             <div class="opcoesDoCartao"><button class="opcoesDoCartao-opcao opcoesDoCartao-remove" data-cartao="1">Remove</button></div>

@@ -36,3 +36,12 @@ https://developer.mozilla.org/pt-BR/docs/Web/Events
 ## diretiva transition no CSS
 
 Ela faz a postergação progressiva de todas as diretivas de um seletor CSS. Todas as propriedades de uma classe definida irão transitar progressivamente.
+
+# Aula 3
+
+## Explorando o emmet
+
+> Cria form com dois elementos:
+- **textarea** com uma class e um atributo name configurado e um atributo com espaço configurado (placeholder)
+- **input** do type submit com uma class e um atributo salvar
+`form.container.novoCartao>textarea.novoCartao-conteudo[name=novoCartao-conteudo][placeholder="Digite aqui"]+input:submit.novoCartao-salvar[value=Salvar]`
