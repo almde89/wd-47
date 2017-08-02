@@ -1,5 +1,6 @@
 'strict';
-(function () {
+(function ($) {
+    var numCartoes = $('.cartao').length;
     /**
      * Comuta o layout entre linhas e blocos.
      * @param {*} _self
@@ -17,49 +18,60 @@
         };
     }
 
-    /**
-     * 
-     * @param {*} _self 
-     */
-    function removerCartao (_self) {
-        return function () {
+    function removerCartao () {
+        return function (evento) {
             /* 
                 as duas maneiras existentes para acesso de um atributo criado.
                 Por padrão, utilizar prefixo data- em todos os atributos criados.
             */
-            //document.querySelector('#cartao'.concat(_self.getAttribute('data-cartao'))).remove();
-            //document.querySelector('#cartao'.concat(_self.dataset.cartao)).remove();
-            var cartao = document.querySelector('#cartao'.concat(_self.dataset.cartao));
+            //document.querySelector('#cartao'.concat(this.getAttribute('data-cartao'))).remove();
+            //document.querySelector('#cartao'.concat(this.dataset.cartao)).remove();
+            var cartao = document.querySelector('#cartao'.concat(this.dataset.cartao));
             cartao.classList.toggle('cartao--some');
             setTimeout(function () {cartao.remove();}, 1000);
         };
     }
 
-    function adicionarNovoCartao () {
-        var conteudoNovoCartao = document.querySelector('.novoCartao-conteudo');
-        var mural = document.querySelector('.mural');
-        var primeiroCartao = mural.firstElementChild;
-        var conteudoDigitado = conteudoNovoCartao.value;
-        var novoCartao = criarCartao(conteudoDigitado);
-
-        mural.insertBefore(novoCartao, primeiroCartao);
+    function adicionarNovoCartao (conteudoDigitado, id) {
+        criarCartao(conteudoDigitado, id).prependTo('.mural');
     }
 
-    function criarCartao (conteudoDigitado) {
-        var novoCartao = document.createElement('div');
-        var conteudoNovoCartao = document.createElement('p');
-        conteudoNovoCartao.classList.add('cartao-conteudo');
-        conteudoNovoCartao.textContent = conteudoDigitado;
-        novoCartao.classList.add('cartao');
-        novoCartao.appendChild(conteudoNovoCartao);
+    function criarOpcoesDoCartao(id) {
+        return $('<div>')
+            .addClass('opcoesDoCartao')
+            .append(criarBotaoRemoverCartao(id));
+    }
+
+    function criarBotaoRemoverCartao(id) {
+        var botaoRemover = $('<button>')
+            .addClass('opcoesDoCartao-opcao opcoesDoCartao-remove')
+            .text('Remove')
+            .attr('data-cartao', id);
+        return botaoRemover
+            .click(removerCartao());
+    }
+
+    function criarCartao (conteudoDigitado, id) {
+        var novoCartao = $('<div>')
+            .addClass('cartao')
+            .attr('id', 'cartao'.concat(id));
+        var conteudoNovoCartao = $('<p>')
+            .addClass('cartao-conteudo')
+            .text(conteudoDigitado);
+        novoCartao.append(criarOpcoesDoCartao(id)).append(conteudoNovoCartao);
         
         return novoCartao;
     }
 
-    function salvarCartao(_self) {
+    function salvarCartao() {
         return function (evento) {
             evento.preventDefault();
-            adicionarNovoCartao();
+            var conteudoDigitado = $('.novoCartao-conteudo', this).val()
+                .trim().replace(/\n/g, '<br>');
+
+            if (conteudoDigitado) {
+                adicionarNovoCartao(conteudoDigitado, ++numCartoes);
+            }
         };
     }
 
@@ -71,6 +83,6 @@
         botao.addEventListener('click', removerCartao(botao));
     }, this);
 
-    var formNovoCartao = document.querySelector('.novoCartao');
-    formNovoCartao.addEventListener('submit', salvarCartao(formNovoCartao));
-})();
+    var formNovoCartao = $('.novoCartao');
+    formNovoCartao.submit(salvarCartao(formNovoCartao));
+})(jQuery);
