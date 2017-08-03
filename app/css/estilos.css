@@ -39,6 +39,7 @@ body {
         text-align: center;
         display: flex;
         flex-wrap: wrap;
+        align-items: baseline;
     }
     
     .mural--linhas {
