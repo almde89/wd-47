@@ -45,3 +45,12 @@ Ela faz a postergação progressiva de todas as diretivas de um seletor CSS. Tod
 - **textarea** com uma class e um atributo name configurado e um atributo com espaço configurado (placeholder)
 - **input** do type submit com uma class e um atributo salvar
 `form.container.novoCartao>textarea.novoCartao-conteudo[name=novoCartao-conteudo][placeholder="Digite aqui"]+input:submit.novoCartao-salvar[value=Salvar]`
+
+# Aula 5
+
+## AJaX - Asynchronous Javascript and XML || AJaJ - Asynchronous Javascript and JSON
+Houve alteração apenas nos Browsers. Os servidores não sabem nem notam a diferença entre uma requisição Ajax e HTTP normal, pois não houve alteração no protocolo HTTP.
+
+## JSON
+Não é a mesma coisa que um objeto Javascript. É um subset do modelo de objetos do Javascript.
+JSON não contém métodos nem comentários, por exemplo.

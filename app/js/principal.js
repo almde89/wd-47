@@ -26,14 +26,14 @@
             */
             //document.querySelector('#cartao'.concat(this.getAttribute('data-cartao'))).remove();
             //document.querySelector('#cartao'.concat(this.dataset.cartao)).remove();
-            var cartao = document.querySelector('#cartao'.concat(_self.get(0).dataset.cartao));
+            var cartao = document.querySelector('#cartao'.concat($(_self).get(0).dataset.cartao));
             cartao.classList.toggle('cartao--some');
             setTimeout(function () {cartao.remove();}, 1000);
         };
     }
 
-    function adicionarNovoCartao (conteudoDigitado, id) {
-        criarCartao(conteudoDigitado, id).prependTo('.mural');
+    function adicionarNovoCartao (conteudo, color) {
+        criarCartao(++numCartoes, conteudo, color).prependTo('.mural');
     }
 
     function criarOpcoesDoCartao(id) {
@@ -51,15 +51,16 @@
             .click(removerCartao(botaoRemover));
     }
 
-    function criarCartao (conteudoDigitado, id) {
+    function criarCartao (id, conteudo, color) {
         var novoCartao = $('<div>')
             .addClass('cartao')
-            .addClass(defineTipoCartao(conteudoDigitado))
+            .addClass(defineTipoCartao(conteudo))
+            .css('background-color', color)
             .attr('id', 'cartao'.concat(id));
         var conteudoNovoCartao = $('<p>')
             .addClass('cartao-conteudo')
             //.text(conteudoDigitado);/* Equivale ao textContent */
-            .html(conteudoDigitado);/* Equivale ao innerHtml */
+            .html(conteudo);/* Equivale ao innerHtml */
         novoCartao.append(criarOpcoesDoCartao(id)).append(conteudoNovoCartao);
         
         return novoCartao;
@@ -68,18 +69,40 @@
     function salvarCartao() {
         return function (evento) {
             evento.preventDefault();
-            var conteudoDigitado = $('.novoCartao-conteudo', this).val()
-                .trim().replace(/\n/g, '<br>')
-                .replace(/(\*\*)(\w+)(\*\*)/g, function (match, p1, p2, p3, offset, string) {
-                    return '<b>' + p2 + '</b>';
-                }).replace(/(\*)(\w+)(\*)/g, function (match, p1, p2, p3, offset, string) {
-                    return '<b>' + p2 + '</b>';
-                });;
+            var conteudoDigitado = formatarConteudoDigitado(this); 
 
             if (conteudoDigitado) {
-                adicionarNovoCartao(conteudoDigitado, ++numCartoes);
+                adicionarNovoCartao(conteudoDigitado);
             }
         };
+    }
+
+    function mostrarAjuda(cartoesAjuda) {
+        $.each(cartoesAjuda.instrucoes, function () {
+            var cartao = this;
+            adicionarNovoCartao(cartao.conteudo, cartao.cor);
+        });
+    }
+
+    function buscarAjuda() {
+        return function () {
+            $.getJSON('http://ceep.herokuapp.com/cartoes/instrucoes'
+            , function (dados) {
+                mostrarAjuda(dados);
+            });
+        };
+    }
+
+    function formatarConteudoDigitado(_self) {
+        return $('.novoCartao-conteudo', _self).val()
+            .trim().replace(/\n/g, '<br>')
+            .replace(/([\*]{3,3})(\w+)([\*]{3,3})/g, function (match, p1, p2, p3, offset, string) {
+                return '<em><b>' + p2 + '</b></em>';
+            }).replace(/([\*]{2,2})(\w+)([\*]{2,2})/g, function (match, p1, p2, p3, offset, string) {
+                return '<b>' + p2 + '</b>';
+            }).replace(/([\*]{1,1})(\w+)([\*]{1,1})/g, function (match, p1, p2, p3, offset, string) {
+                return '<em>' + p2 + '</em>';
+            });
     }
 
     function defineTipoCartao(texto) {
@@ -103,6 +126,31 @@
         }
     }
 
+    function sincronizarServidor (cartoes) {
+        var mural = {usuario: 'almde89@gmail.com', cartoes: cartoes};
+        $.post('http://ceep.herokuapp.com/cartoes/salvar', mural, function (response) {
+            $('#sync').addClass('botaoSync--sincronizado');
+        }).fail(function () {
+            $('#sync').addClass('botaoSync--deuRuim');
+        }).always(function () {
+            $('#sync').removeClass('botaoSync--esperando');
+        });
+    }
+
+    function iniciarSincronizacao() {
+        return function () {
+            var cartoes = [];
+            $('#sync').addClass('botaoSync--esperando');
+            $('.cartao').each(function () {
+                var cartao = $(this);
+                var conteudo = cartao.find('.cartao-conteudo').html();
+                var cor = cartao.css('background-color');
+                cartoes.push({conteudo: conteudo, cor: cor});
+            });
+            sincronizarServidor(cartoes);
+        };
+    }
+
     var btComutaLayout = document.querySelector('#mudaLayout');
     btComutaLayout.addEventListener('click', comutarLayout(btComutaLayout));
 
@@ -122,4 +170,8 @@
             coisas que não são referente ao texto de visualização do cartão. Sem isso poderíamos pegar o conteúdo do botão 'remove'*/
         }).show();
     });
+
+    $('#ajuda').one('click', buscarAjuda());
+
+    $('#sync').click(iniciarSincronizacao());
 })(jQuery);
