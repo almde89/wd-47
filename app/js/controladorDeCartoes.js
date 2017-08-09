@@ -1,7 +1,8 @@
 var controladorCartoes = (function($) {
-
+    'use strict';
     function criarCartao(conteudo, cor = 'EBEF40') {
 
+        var timer;
         var contador = $('.cartao').length;
 
         contador++;
@@ -9,7 +10,14 @@ var controladorCartoes = (function($) {
         // Criando o conteúdo do novo Cartão
         // .text() pega como texto puro, não interpreta o html
         //var conteudoNovoCartao = $('<p>').addClass('cartao-conteudo').text(textoDigitado); 
-        var conteudoNovoCartao = $('<p>').addClass('cartao-conteudo').html(conteudo);
+        var conteudoNovoCartao = $('<p>').addClass('cartao-conteudo')
+            .attr('contenteditable', true).html(conteudo)
+            .on('input', function () {
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                    publisher.emitirEvento(eventos.precisaSincronizarMural);
+                }, 1000);
+            });
         console.log(conteudoNovoCartao);
 
         // Opções do Cartãos
@@ -20,7 +28,7 @@ var controladorCartoes = (function($) {
             .attr('data-idcartao', contador);
 
         var opcoesDoCartao = $('<div>').addClass('opcoesDoCartao')
-            .append(botaoRemove);
+            .append(botaoRemove).append(opcoesDeCoresDoCartao('cartao'+contador));
 
         var tamanhoCartao = decideTamanhoCartao(conteudo);
         console.log('classe tam cartao: ' + tamanhoCartao);
@@ -32,7 +40,12 @@ var controladorCartoes = (function($) {
             .append(opcoesDoCartao)
             .append(conteudoNovoCartao)
             .attr('id', 'cartao' + contador)
-            .css('background-color', cor);
+            .css('background-color', cor)
+            .on('change', '.opcoesDoCartao-radioCor', function () {
+                var cor = $(this).val();
+                $('#cartao'+contador).css('background-color', cor);
+                publisher.emitirEvento(eventos.precisaSincronizarMural);
+            });
         console.log(novoCartao);
 
         // Atibuindo a section
@@ -55,6 +68,7 @@ var controladorCartoes = (function($) {
         cartao.classList.add('cartao--some');
         setTimeout(function() {
             cartao.remove();
+            publisher.emitirEvento(eventos.precisaSincronizarMural);
         }, 170);
     }
 
@@ -88,6 +102,42 @@ var controladorCartoes = (function($) {
         }
 
         return tipoCartao;
+    }
+
+    function opcoesDeCoresDoCartao(idDoCartao) {
+        var cores = [
+            { nome: "Padrão", codigo: "#EBEF40" },
+            { nome: "Importante", codigo: "#F05450" },
+            { nome: "Tarefa", codigo: "#92C4EC" },
+            { nome: "Inspiração", codigo: "#76EF40" }
+        ];
+
+        var opcoesDeCor = $("<div>").addClass("opcoesDoCartao-cores");
+
+        $.each(cores, function () {
+            var cor = this;
+
+            var idRadioCor = "cor" + cor.nome + "-" + idDoCartao;
+
+            var radioCor = $("<input>")
+                .addClass("opcoesDoCartao-radioCor")
+                .val(cor.codigo)
+                .attr({
+                    type: "radio",
+                    id: idRadioCor,
+                    name: "corDoCartao" + idDoCartao
+                });
+
+            var labelRadioCor = $("<label>")
+                .addClass("opcoesDoCartao-opcao opcoesDoCartao-cor")
+                .text(cor.nome)
+                .css("color", cor.codigo)
+                .attr("for", idRadioCor);
+
+            opcoesDeCor.append(radioCor).append(labelRadioCor);
+        });
+
+        return opcoesDeCor;
     }
 
     return {
