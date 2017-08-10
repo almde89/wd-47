@@ -1,6 +1,6 @@
 var controladorCartoes = (function($) {
     'use strict';
-    function criarCartao(conteudo, cor = 'EBEF40') {
+    function criarCartao(conteudo, cor) {
 
         var timer;
         var contador = $('.cartao').length;
@@ -142,5 +142,5 @@ var controladorCartoes = (function($) {
 
     return {
         cria: criarCartao //retorna a ref "cria" para acessar a função criarCartao()
-    }
+    };
 })(jQuery);

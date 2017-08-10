@@ -27,9 +27,9 @@ body {
     transition: .2s ease-in;
 }
 
-#mudaLayout {
+/*#mudaLayout {
     display: none;
-}
+}*/
 
 
 /*depois do tam definido, ele tratará diferentemente.*/
@@ -41,23 +41,27 @@ body {
         box-sizing: border-box;
         /* para considerar todas as bordas no tamanho*/
         text-align: left;
-        flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
         /* permite que o cartão de uma esticada se não couber na mesma linha */
     }
     .mural {
         text-align: center;
+        display: -ms-flexbox;
         display: flex;
-        flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
     }
     .mural--linhas {
-        flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
     }
     .mural--linhas .cartao {
         width: auto;
     }
-    #mudaLayout {
+    /*#mudaLayout {
         display: inline-block;
-    }
+    }*/
 }
 
 .container {

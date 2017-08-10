@@ -1,0 +1,17 @@
+{
+  "name": "ceep",
+  "homepage": "https://github.com/almde89/wd-47",
+  "description": "ceep",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
